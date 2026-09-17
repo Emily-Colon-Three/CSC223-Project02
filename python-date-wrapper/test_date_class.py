@@ -44,5 +44,11 @@ class InvalidLeapDay(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.date = Date(2, 29, 2100)
 
+class ReadOnlyProperty(unittest.TestCase):
+    def test_AttributeError(self):
+        with self.assertRaises(AttributeError):
+            self.date = Date()
+            self.date.day = 15
+
 if __name__ == '__main__':
     unittest.main()
