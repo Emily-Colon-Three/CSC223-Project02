@@ -6,3 +6,16 @@ class Date:
         self.month = month
         self.day = day
         self.year = year
+
+    @property
+    def month(self) -> int:
+        return self.month
+
+    @property
+    def day(self) -> int:
+        return self.day
+
+    @property
+    def year(self) -> int:
+        return self.year
+    
