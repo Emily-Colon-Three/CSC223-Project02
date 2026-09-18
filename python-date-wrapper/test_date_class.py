@@ -98,5 +98,12 @@ class LeapYears(unittest.TestCase):
         self.date2 = Date(3, 30, 2000)
         self.assertTrue(self.date2.is_leap_year())
 
+class StaticLeapYears(unittest.TestCase):
+    def test_not_leap_year(self):
+        self.assertFalse(Date.year_is_leap(2001))
+
+    def test_leap_year(self):
+        self.assertTrue(Date.year_is_leap(2004))
+
 if __name__ == '__main__':
     unittest.main()

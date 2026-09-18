@@ -30,3 +30,7 @@ class Date:
     # To be leap year, the year must be divisible by 4, but not 100, unless divisible by 400.
     def is_leap_year(self) -> bool:
         return self.date.year % 4 == 0 and (self.date.year % 100 != 0 or self.date.year % 400 == 0)
+
+    @staticmethod
+    def year_is_leap(year: int) -> bool:
+        return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
