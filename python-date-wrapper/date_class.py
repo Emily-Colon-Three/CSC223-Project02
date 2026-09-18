@@ -36,7 +36,7 @@ class Date:
     def year_is_leap(year: int) -> bool:
         return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
-    # Returns the final day of whatever month is in the date of the Date object.
+    # Returns the final day of whatever month is in the date of the Date object. Accounts for leap year on February.
     def last_day(self) -> int:
         if (self.date.month == 1):
             return 31
@@ -65,3 +65,9 @@ class Date:
             return 31
         else:
             return 30
+
+    # Uses instance last_day() method to find the last day of a month on a given year
+    @staticmethod
+    def last_day_of_month(year: int, month: int) -> int:
+        ex = Date(1, month, year) # Sets day to 1, not relevant
+        return ex.last_day()

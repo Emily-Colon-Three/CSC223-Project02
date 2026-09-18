@@ -98,6 +98,7 @@ class LeapYears(unittest.TestCase):
         self.date2 = Date(3, 30, 2000)
         self.assertTrue(self.date2.is_leap_year())
 
+# Tests the static method for leap years, year_is_leap().
 class StaticLeapYears(unittest.TestCase):
     def test_not_leap_year(self):
         self.assertFalse(Date.year_is_leap(2001))
@@ -105,6 +106,7 @@ class StaticLeapYears(unittest.TestCase):
     def test_leap_year(self):
         self.assertTrue(Date.year_is_leap(2004))
 
+# Tests how well the last_day() method identifies the final day of the month for a date, considering leap years.
 class LastDayDate(unittest.TestCase):
     def test_normal(self):
         self.date = Date(3, 1, 2003)
@@ -114,5 +116,14 @@ class LastDayDate(unittest.TestCase):
         self.date = Date(2, 1, 2000)
         self.assertEqual(self.date.last_day(), 29)
 
+# Similar to the test for the instance method, but checks January and February (non-leap).
+class LastDayMonth(unittest.TestCase):
+    def test_normal(self):
+        self.date = Date(1, 1, 2000)
+        self.assertEqual(self.date.last_day(), 31)
+
+    def test_special(self):
+        self.date = Date(2, 1, 2001)
+        self.assertEqual(self.date.last_day(), 28)
 if __name__ == '__main__':
     unittest.main()
