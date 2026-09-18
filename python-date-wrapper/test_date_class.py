@@ -88,5 +88,15 @@ class DateAfterInvalidSetDate(unittest.TestCase):
     def test_year(self):
         self.assertEqual(self.date.year, 1900)
 
+# Tests the is_leap_year() method, and whether it correctly identifies leap years.
+class LeapYears(unittest.TestCase):
+    def test_not_leap_year(self): # Tests date not on a leap year, should return false
+        self.date1 = Date(2, 13, 2100)
+        self.assertFalse(self.date1.is_leap_year())
+
+    def test_leap_year(self): # Tests leap year date, should return true
+        self.date2 = Date(3, 30, 2000)
+        self.assertTrue(self.date2.is_leap_year())
+
 if __name__ == '__main__':
     unittest.main()
