@@ -71,3 +71,15 @@ class Date:
     def last_day_of_month(year: int, month: int) -> int:
         ex = Date(1, month, year) # Sets day to 1, not relevant
         return ex.last_day()
+
+    # Returns string of the date in M/D/Y format
+    def to_numeric_string(self) -> str:
+        return self.date.strftime("%m/%d/%Y")
+
+    # Returns string of the date in "M, D Y" format.
+    def to_month_first_string(self) -> str:
+        return self.date.strftime("%B %d, %Y")
+
+    # Returns string of the date in "D M, Y" format.
+    def to_day_first_string(self) -> str:
+        return self.date.strftime("%d %B, %Y")

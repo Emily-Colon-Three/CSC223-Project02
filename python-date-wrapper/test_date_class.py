@@ -125,5 +125,24 @@ class LastDayMonth(unittest.TestCase):
     def test_special(self):
         self.date = Date(2, 1, 2001)
         self.assertEqual(self.date.last_day(), 28)
+
+# Tests the date 25 December 2021 for if it's properly formatted by to_numeric_string method.
+class NumericDateFormat(unittest.TestCase):
+    def test_string(self):
+        self.date = Date(12, 25, 2021)
+        self.assertEqual(self.date.to_numeric_string(), "12/25/2021")
+
+# Tests 25 December 2021 in month-first format, with the month in word form.
+class MonthFirstFormat(unittest.TestCase):
+    def test_string(self):
+        self.date = Date(12, 25, 2021)
+        self.assertEqual(self.date.to_month_first_string(), "December 25, 2021")
+
+# Tests 25 December 2021 in day-first format, with the month in word form.
+class DayFirstFormat(unittest.TestCase):
+    def test_string(self):
+        self.date = Date(12, 25, 2021)
+        self.assertEqual(self.date.to_day_first_string(), "25 December, 2021")
+
 if __name__ == '__main__':
     unittest.main()
