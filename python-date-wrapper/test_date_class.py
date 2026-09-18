@@ -105,5 +105,14 @@ class StaticLeapYears(unittest.TestCase):
     def test_leap_year(self):
         self.assertTrue(Date.year_is_leap(2004))
 
+class LastDayDate(unittest.TestCase):
+    def test_normal(self):
+        self.date = Date(3, 1, 2003)
+        self.assertEqual(self.date.last_day(), 31)
+
+    def test_special(self):
+        self.date = Date(2, 1, 2000)
+        self.assertEqual(self.date.last_day(), 29)
+
 if __name__ == '__main__':
     unittest.main()

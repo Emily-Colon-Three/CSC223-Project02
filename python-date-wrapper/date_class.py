@@ -31,6 +31,37 @@ class Date:
     def is_leap_year(self) -> bool:
         return self.date.year % 4 == 0 and (self.date.year % 100 != 0 or self.date.year % 400 == 0)
 
+    # Same as is_leap_year, but uses a year from input and is a static method.
     @staticmethod
     def year_is_leap(year: int) -> bool:
         return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+    # Returns the final day of whatever month is in the date of the Date object.
+    def last_day(self) -> int:
+        if (self.date.month == 1):
+            return 31
+        elif (self.date.month == 2):
+            if (self.is_leap_year()):
+                return 29
+            else:
+                return 28
+        elif (self.date.month == 3):
+            return 31
+        elif (self.date.month == 4):
+            return 30
+        elif (self.date.month == 5):
+            return 31
+        elif (self.date.month == 6):
+            return 30
+        elif (self.date.month == 7):
+            return 31
+        elif (self.date.month == 8):
+            return 30
+        elif (self.date.month == 9):
+            return 31
+        elif (self.date.month == 10):
+            return 30
+        elif (self.date.month == 11):
+            return 31
+        else:
+            return 30
