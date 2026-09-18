@@ -21,3 +21,7 @@ class Date:
     @property
     def year(self) -> int:
         return self.date.year
+
+    # A valid and controlled way to change the date held in a Date object
+    def set_date(self, month: int, day: int, year: int) -> None:
+        self.date = date(year, month, day)
