@@ -194,6 +194,59 @@ class UnsupportedOperand(unittest.TestCase):
         with self.assertRaises(TypeError):
             sum = self.date1 + self.date2
 
+# Uses increment() method to bring a date forward by one day
+class DateIncrement(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(3, 31, 2025)
+        self.date.increment()
+        self.assertEqual(self.date.to_numeric_string(), "04/01/2025")
+
+# Increments a date from February 29, a date only possible on leap years, to the next month.
+class LeapYearIncrement(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(2, 29, 2024)
+        self.date.increment()
+        self.assertEqual(self.date.to_numeric_string(), "03/01/2024")
+
+# Increments a date over to the next year, from December 31 to January 1.
+class NewYearIncrement(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(12, 31, 2026)
+        self.date.increment()
+        self.assertEqual(self.date.to_numeric_string(), "01/01/2027")
+
+# Tests that increment() method returns itself; in this context, self.date
+class IncrementReturnsSelf(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(9, 21, 2026)
+        self.assertEqual(self.date.increment(), self.date)
+
+# Tests the decrement() method, rolling a date over to the previous month.
+class DateDecrement(unittest.TestCase):
+    def test_decrement(self):
+        self.date = Date(4, 1, 2000)
+        self.date.decrement()
+        self.assertEqual(self.date.to_numeric_string(), "03/31/2000")
+
+# Decrements date to the last day of February on a leap year, which is meant to yield the 29th.
+class LeapYearDecrement(unittest.TestCase):
+    def test_decrement(self):
+        self.date = Date(3, 1, 2024)
+        self.date.decrement()
+        self.assertEqual(self.date.to_numeric_string(), "02/29/2024")
+
+# Rolls back date to the final day of the previous year with decrement()
+class LastYearDecrement(unittest.TestCase):
+    def test_decrement(self):
+        self.date = Date(1, 1, 2000)
+        self.date.decrement()
+        self.assertEqual(self.date.to_numeric_string(), "12/31/1999")
+
+# Checks that the return value of increment() is equal to itself, in this case self.date
+class DecrementReturnsSelf(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(9, 21, 2026)
+        self.assertEqual(self.date.increment(), self.date)
 
 if __name__ == '__main__':
     unittest.main()

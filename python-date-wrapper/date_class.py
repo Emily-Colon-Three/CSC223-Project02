@@ -14,7 +14,9 @@ class Date:
     Date object has three methods for returning a string representation of the date in various
     formats, to_numeric_string(), to_month_first_string(), and to_day_first_string().
     Dates can be subtracted from one another with the __sub__() dunder method. If the first date is
-    earlier than the second, a negative value will be returned. Output is in days, an integer."""
+    earlier than the second, a negative value will be returned. Output is in days, an integer.
+    Date features increment() method which updates the date to be one day later. Returns itself.
+    Similarly, decrement() method returns itself with a date one day earlier than before."""
 
     # Constructor for Date object with default values in case input not given
     def __init__(self, month: int = 1, day: int = 1, year: int = 1900) -> None:
@@ -69,5 +71,16 @@ class Date:
     def to_day_first_string(self) -> str:
         return self.date.strftime("%d %B, %Y")
 
+    # Dunder method for Date Subtraction; returns number of days other date is earlier than self. Makes Date class compatible with - operand.
     def __sub__(self, other: Date) -> int:
         return (self.date - other.date).days
+
+    # Method which changes date object within Date to be one day later using timedelta. Returns self.
+    def increment(self) -> Date:
+        self.date += timedelta(days = 1)
+        return self
+
+    # Method which changes date of Date object, decrementing it to one day earlier with timedelta. Returns itself as Date object.
+    def decrement(self) -> Date:
+        self.date -= timedelta(days = 1)
+        return self
