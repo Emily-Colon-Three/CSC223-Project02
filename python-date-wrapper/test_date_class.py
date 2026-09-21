@@ -248,5 +248,11 @@ class DecrementReturnsSelf(unittest.TestCase):
         self.date = Date(9, 21, 2026)
         self.assertEqual(self.date.increment(), self.date)
 
+# Takes a particular date and tests str() to make sure it is equal to month-first format of the date.
+class CustomStringOutput(unittest.TestCase):
+    def test_string_output(self):
+        self.date = Date(4, 18, 2018)
+        self.assertEqual(str(self.date), "April 18, 2018")
+
 if __name__ == '__main__':
     unittest.main()

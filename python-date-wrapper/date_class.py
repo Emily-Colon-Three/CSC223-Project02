@@ -75,6 +75,10 @@ class Date:
     def __sub__(self, other: Date) -> int:
         return (self.date - other.date).days
 
+    # Dunder method for Customized output. Means in needed contexts, Date is easily converted to string via str(). Uses Month-first formatting.
+    def __str__(self) -> str:
+        return self.to_month_first_string()
+
     # Method which changes date object within Date to be one day later using timedelta. Returns self.
     def increment(self) -> Date:
         self.date += timedelta(days = 1)
