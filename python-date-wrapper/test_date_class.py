@@ -144,5 +144,56 @@ class DayFirstFormat(unittest.TestCase):
         self.date = Date(12, 25, 2021)
         self.assertEqual(self.date.to_day_first_string(), "25 December, 2021")
 
+# Uses the subtraction dunder method to find a positive difference between a later and earlier date
+class DateSubtractionPositiveDays(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(9, 21, 2026)
+        self.date2 = Date(9, 17, 2026)
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, 4)
+
+# Uses subtraction dunder method to find a negative difference, subtracting a later date from an earlier one.
+class DateSubtractionNegativeDays(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(9, 17, 2026)
+        self.date2 = Date(9, 21, 2026)
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, -4)
+
+# Subtracts two dates which are exactly the same, with an intended result of 0 days difference
+class DateSubtractionEqual(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date()
+        self.date2 = Date()
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, 0)
+
+# Subtracts a date from the previous year from the current date, different by one day and one year.
+class DateSubtractionAcrossYears(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(9, 21, 2026)
+        self.date2 = Date(9, 20, 2025)
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, 366)
+
+# Tries to add two dates together, an unsupported feature and unimplemented operand with Date.
+class UnsupportedOperand(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(8, 1, 2000)
+        self.date2 = Date(1, 20, 26)
+
+    def test_addition(self):
+        with self.assertRaises(TypeError):
+            sum = self.date1 + self.date2
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,9 +1,20 @@
-from datetime import date, datetime
+from datetime import date, timedelta
 import calendar
 
 class Date:
-    # The Date class is a wrapper around the datetime.date object.
-    # It raises the "ValueError" exception when an invalid day, month, or year is used for the date.
+    """The Date class is a wrapper class for the datetime.date object.
+    It contains a constructor which allows a valid date to be stored within a Date object, with
+    ValueError raised for invalid dates and a default date of January 1st, 1900.
+    There are three getter methods, which are classified as properties of a Date object. No
+    setters for date, month, or year individually are available, and the date may only be set with
+    method set_date().
+    Additionally, there are both instance and static methods for determining whether a date is on
+    a leap year and for retrieving the final day of the month of a date, named is_leap_year() and
+    last_day() for the instance versions and year_is_leap() and last_day_of_month() for static.
+    Date object has three methods for returning a string representation of the date in various
+    formats, to_numeric_string(), to_month_first_string(), and to_day_first_string().
+    Dates can be subtracted from one another with the __sub__() dunder method. If the first date is
+    earlier than the second, a negative value will be returned. Output is in days, an integer."""
 
     # Constructor for Date object with default values in case input not given
     def __init__(self, month: int = 1, day: int = 1, year: int = 1900) -> None:
@@ -57,3 +68,6 @@ class Date:
     # Returns string of the date in "D M, Y" format.
     def to_day_first_string(self) -> str:
         return self.date.strftime("%d %B, %Y")
+
+    def __sub__(self, other: Date) -> int:
+        return (self.date - other.date).days
