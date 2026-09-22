@@ -88,3 +88,8 @@ class Date:
     def decrement(self) -> Date:
         self.date -= timedelta(days = 1)
         return self
+
+    # Uses cls to bypass class-specific nomenclature and create a new Date object, with user input defining the month, day, and year.
+    @classmethod
+    def from_input(cls) -> Date:
+        return cls(int(input()), int(input()), int(input()))

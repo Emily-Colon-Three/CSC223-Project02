@@ -1,5 +1,7 @@
+import builtins
 import unittest
 from date_class import Date
+from unittest.mock import patch
 
 # Tests if default Date constructor functions properly
 class DateConstructorTest(unittest.TestCase):
@@ -253,6 +255,29 @@ class CustomStringOutput(unittest.TestCase):
     def test_string_output(self):
         self.date = Date(4, 18, 2018)
         self.assertEqual(str(self.date), "April 18, 2018")
+
+# Creates mock input for a date, using it to test from_input() method and Date custom input. Test ensures a new and proper Date object is created according to input.
+class CustomInput(unittest.TestCase):
+    @patch("builtins.input", side_effect=["4", "18", "2018"])
+    def test_from_input_creates_date(self, mock_input):
+        result = Date.from_input()
+        self.assertEqual(result.month, 4)
+        self.assertEqual(result.day, 18)
+        self.assertEqual(result.year, 2018)
+
+# Puts string, non-numeric input into custom Date input to ensure that ValueError is thrown.
+class NonNumberInput(unittest.TestCase):
+    @patch("builtins.input", side_effect=["April", "Eighteenth", "Twenty-eighteen"])
+    def test_from_input_non_number(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
+
+# Inputs non-existent date via mock input with from_input() to test if ValueError is thrown.
+class InvalidDateInput(unittest.TestCase):
+    @patch("builtins.input", side_effect=["2", "29", "2026"])
+    def test_from_input_invalid_date(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
 
 if __name__ == '__main__':
     unittest.main()
