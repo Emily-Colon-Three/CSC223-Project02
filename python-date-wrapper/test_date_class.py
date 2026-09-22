@@ -1,5 +1,9 @@
+import builtins
 import unittest
 from date_class import Date
+from unittest.mock import patch
+
+### Part 1 Testing
 
 # Tests if default Date constructor functions properly
 class DateConstructorTest(unittest.TestCase):
@@ -143,6 +147,142 @@ class DayFirstFormat(unittest.TestCase):
     def test_string(self):
         self.date = Date(12, 25, 2021)
         self.assertEqual(self.date.to_day_first_string(), "25 December, 2021")
+
+
+### Part 2 Testing
+
+# Uses the subtraction dunder method to find a positive difference between a later and earlier date
+class DateSubtractionPositiveDays(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(9, 21, 2026)
+        self.date2 = Date(9, 17, 2026)
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, 4)
+
+# Uses subtraction dunder method to find a negative difference, subtracting a later date from an earlier one.
+class DateSubtractionNegativeDays(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(9, 17, 2026)
+        self.date2 = Date(9, 21, 2026)
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, -4)
+
+# Subtracts two dates which are exactly the same, with an intended result of 0 days difference
+class DateSubtractionEqual(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date()
+        self.date2 = Date()
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, 0)
+
+# Subtracts a date from the previous year from the current date, different by one day and one year.
+class DateSubtractionAcrossYears(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(9, 21, 2026)
+        self.date2 = Date(9, 20, 2025)
+
+    def test_difference(self):
+        difference = self.date1 - self.date2
+        self.assertEqual(difference, 366)
+
+# Tries to add two dates together, an unsupported feature and unimplemented operand with Date.
+class UnsupportedOperand(unittest.TestCase):
+    def setUp(self):
+        self.date1 = Date(8, 1, 2000)
+        self.date2 = Date(1, 20, 26)
+
+    def test_addition(self):
+        with self.assertRaises(TypeError):
+            sum = self.date1 + self.date2
+
+# Uses increment() method to bring a date forward by one day
+class DateIncrement(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(3, 31, 2025)
+        self.date.increment()
+        self.assertEqual(self.date.to_numeric_string(), "04/01/2025")
+
+# Increments a date from February 29, a date only possible on leap years, to the next month.
+class LeapYearIncrement(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(2, 29, 2024)
+        self.date.increment()
+        self.assertEqual(self.date.to_numeric_string(), "03/01/2024")
+
+# Increments a date over to the next year, from December 31 to January 1.
+class NewYearIncrement(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(12, 31, 2026)
+        self.date.increment()
+        self.assertEqual(self.date.to_numeric_string(), "01/01/2027")
+
+# Tests that increment() method returns itself; in this context, self.date
+class IncrementReturnsSelf(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(9, 21, 2026)
+        self.assertEqual(self.date.increment(), self.date)
+
+# Tests the decrement() method, rolling a date over to the previous month.
+class DateDecrement(unittest.TestCase):
+    def test_decrement(self):
+        self.date = Date(4, 1, 2000)
+        self.date.decrement()
+        self.assertEqual(self.date.to_numeric_string(), "03/31/2000")
+
+# Decrements date to the last day of February on a leap year, which is meant to yield the 29th.
+class LeapYearDecrement(unittest.TestCase):
+    def test_decrement(self):
+        self.date = Date(3, 1, 2024)
+        self.date.decrement()
+        self.assertEqual(self.date.to_numeric_string(), "02/29/2024")
+
+# Rolls back date to the final day of the previous year with decrement()
+class LastYearDecrement(unittest.TestCase):
+    def test_decrement(self):
+        self.date = Date(1, 1, 2000)
+        self.date.decrement()
+        self.assertEqual(self.date.to_numeric_string(), "12/31/1999")
+
+# Checks that the return value of increment() is equal to itself, in this case self.date
+class DecrementReturnsSelf(unittest.TestCase):
+    def test_increment(self):
+        self.date = Date(9, 21, 2026)
+        self.assertEqual(self.date.increment(), self.date)
+
+# Takes a particular date and tests str() to make sure it is equal to month-first format of the date.
+class CustomStringOutput(unittest.TestCase):
+    def test_string_output(self):
+        self.date = Date(4, 18, 2018)
+        self.assertEqual(str(self.date), "April 18, 2018")
+
+# Creates mock input for a date, using it to test from_input() method and Date custom input. Test ensures a new and proper Date object is created according to input.
+class CustomInput(unittest.TestCase):
+    @patch("builtins.input", side_effect=["4", "18", "2018"])
+    def test_from_input_creates_date(self, mock_input):
+        result = Date.from_input()
+        self.assertEqual(result.month, 4)
+        self.assertEqual(result.day, 18)
+        self.assertEqual(result.year, 2018)
+
+# Puts string, non-numeric input into custom Date input to ensure that ValueError is thrown.
+class NonNumberInput(unittest.TestCase):
+    @patch("builtins.input", side_effect=["April", "Eighteenth", "Twenty-eighteen"])
+    def test_from_input_non_number(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
+
+# Inputs non-existent date via mock input with from_input() to test if ValueError is thrown.
+class InvalidDateInput(unittest.TestCase):
+    @patch("builtins.input", side_effect=["2", "29", "2026"])
+    def test_from_input_invalid_date(self, mock_input):
+        with self.assertRaises(ValueError):
+            result = Date.from_input()
 
 if __name__ == '__main__':
     unittest.main()
