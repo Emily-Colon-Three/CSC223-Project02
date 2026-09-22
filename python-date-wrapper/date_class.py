@@ -16,7 +16,11 @@ class Date:
     Dates can be subtracted from one another with the __sub__() dunder method. If the first date is
     earlier than the second, a negative value will be returned. Output is in days, an integer.
     Date features increment() method which updates the date to be one day later. Returns itself.
-    Similarly, decrement() method returns itself with a date one day earlier than before."""
+    Similarly, decrement() method returns itself with a date one day earlier than before.
+    Then, there is the __str__() dunder method to allow the str() function to be applied to a Date
+    object, using Month-first formatting.
+    The from_input method is a classmethod which creates a new Date object from user input, without
+    class-specific language, utilizing cls."""
 
     # Constructor for Date object with default values in case input not given
     def __init__(self, month: int = 1, day: int = 1, year: int = 1900) -> None:

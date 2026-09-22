@@ -3,6 +3,8 @@ import unittest
 from date_class import Date
 from unittest.mock import patch
 
+### Part 1 Testing
+
 # Tests if default Date constructor functions properly
 class DateConstructorTest(unittest.TestCase):
     def setUp(self): # Creates the Default Date to be tested
@@ -145,6 +147,9 @@ class DayFirstFormat(unittest.TestCase):
     def test_string(self):
         self.date = Date(12, 25, 2021)
         self.assertEqual(self.date.to_day_first_string(), "25 December, 2021")
+
+
+### Part 2 Testing
 
 # Uses the subtraction dunder method to find a positive difference between a later and earlier date
 class DateSubtractionPositiveDays(unittest.TestCase):
